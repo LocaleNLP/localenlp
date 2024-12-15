@@ -1,9 +1,11 @@
 {
-  "extends": "@localenlp/typescript/nextjs.json",
+  // "extends": "@localenlp/typescript/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "strict": true,
     "allowJs": true,
@@ -13,7 +15,19 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
   "include": [
     "next-env.d.ts",
@@ -23,5 +37,7 @@
     ".next/types/**/*.ts",
     "tailwind.config.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
