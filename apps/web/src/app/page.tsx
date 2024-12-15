@@ -31,7 +31,7 @@ export default function Page() {
       </span> */}
 
       <div className="mt-10 mb-8">
-        <CopyText value="bunx degit midday-ai/localenlp localenlp" />
+        <CopyText value="bunx degit localeNLP/localenlp localenlp" />
       </div>
 
       <TooltipProvider delayDuration={0}>
