@@ -1,0 +1,3 @@
+{
+  "extends": "@localenlp/typescript/base.json"
+}
