@@ -19,8 +19,8 @@ export default function Page() {
 
       <p className="relative z-10 text-center max-w-[80%] mt-0 md:mt-4">
         An open-source starter kit based on{" "}
-        <a href="https://midday.ai?utm_source=localenlp" className="underline">
-          Midday
+        <a href="https:/localenlp.com" className="underline">
+          LocaleNLP
         </a>
         .
       </p>

@@ -14,10 +14,10 @@ const DepartureMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://localenlp.run"),
-  title: "Create localenlp",
-  description:
-    "A free, open-source starter kit for your next project, built with insights from Midday.",
+metadataBase: new URL("https://localenlp.com"),
+title: "LocaleNLP",
+description:
+  "LocaleNLP is revolutionizing digital communication in Africa with cutting-edge NLP solutions tailored for underserved languages. Explore our tools for text translation, speech recognition, and AI-powered linguistic solutions, driving inclusivity and empowering communities.",
 };
 
 export default function RootLayout({
