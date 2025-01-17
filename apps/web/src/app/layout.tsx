@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils"
 import { Inter } from "next/font/google"
 import "@/styles/globals.css"
 import { SiteFooter } from "@/components/site-footer"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -76,6 +77,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <main className="flex-1">{children}</main>
             <SiteFooter />
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

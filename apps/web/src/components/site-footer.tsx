@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Github, Twitter, Linkedin } from "lucide-react"
+import { NewsletterForm } from "@/components/newsletter-form"
 
 const footerLinks = {
   product: [
@@ -115,14 +116,7 @@ export function SiteFooter() {
               <p className="text-sm text-muted-foreground">
                 Get the latest updates on African language technology
               </p>
-              <form className="flex gap-2">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="max-w-sm"
-                />
-                <Button type="submit">Subscribe</Button>
-              </form>
+              <NewsletterForm />
             </div>
             <div className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} LocaleNLP. All rights reserved.
