@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { useScroll } from "@/hooks/use-scroll"
 import { cn } from "@/lib/utils"
+import { Search } from "@/components/search"
 
 export function SiteHeader() {
   const scrolled = useScroll(50)
@@ -27,6 +28,7 @@ export function SiteHeader() {
           <MainNav />
         </div>
         <div className="flex items-center gap-2">
+          <Search />
           <ThemeToggle />
           <div className="lg:hidden">
             <Button size="sm">
