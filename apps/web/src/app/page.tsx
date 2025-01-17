@@ -1,78 +1,198 @@
-import { AnimatedText } from "@/components/animated-text";
-import { CopyText } from "@/components/copy-text";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@localenlp/ui/tooltip";
+import { TypewriterEffect } from "@/components/ui/typewriter-effect"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Globe, Mic, Languages, Brain, Share2 } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { DemoTranslator } from "@/components/demo-translator"
+import { TechnologyShowcase } from "@/components/technology-showcase"
+import { PartnersShowcase } from "@/components/partners-showcase"
+import { TimelineShowcase } from "@/components/timeline-showcase"
+import { LeaderboardShowcase } from "@/components/leaderboard-showcase"
+import { AboutShowcase } from "@/components/about-showcase"
+import { ContactShowcase } from "@/components/contact-showcase"
 
-export default function Page() {
+const features = [
+  {
+    title: "Text Translation",
+    description: "Advanced neural machine translation for African languages",
+    icon: Languages,
+  },
+  {
+    title: "Speech Recognition",
+    description: "Convert spoken African languages to text with high accuracy",
+    icon: Mic,
+  },
+  {
+    title: "Natural Language Understanding",
+    description: "Context-aware processing of African languages",
+    icon: Brain,
+  },
+  {
+    title: "Community Contributions",
+    description: "Collaborative platform for language data collection",
+    icon: Share2,
+  },
+]
+
+export default function HomePage() {
+  const words = [
+    { text: "Translate." },
+    { text: "Understand." },
+    { text: "Speak." },
+  ]
+
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center relative overflow-hidden">
-      <div className="absolute -top-[118px] inset-0 bg-[linear-gradient(to_right,#222_1px,transparent_1px),linear-gradient(to_bottom,#222_1px,transparent_1px)] bg-[size:4.5rem_2rem] -z-10 [transform:perspective(1000px)_rotateX(-63deg)] h-[80%] pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent pointer-events-none -z-10" />
+    <div className="relative">
+      {/* Gradient background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-purple-900" />
 
-      <h1 className="font-departure text-[40px] md:text-[84px] relative z-10 text-center h-[120px] md:h-auto leading-tight">
-        <AnimatedText text="Production ready code" />
-      </h1>
+      {/* Hero section */}
+      <section className="container py-24 space-y-8">
+        <div className="flex flex-col items-center text-center space-y-4">
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+            Breaking Language Barriers
+            <br />
+            in Africa
+          </h1>
 
-      <p className="relative z-10 text-center max-w-[80%] mt-0 md:mt-4">
-        An open-source starter kit based on{" "}
-        <a href="https:/localenlp.com" className="underline">
-          LocaleNLP
-        </a>
-        .
-      </p>
+          <TypewriterEffect words={words} className="text-2xl sm:text-3xl" />
 
-      {/* In process */}
-      {/* <span className="relative z-10 text-center text-[#878787] text-xs mt-2">
-        Security verified by Kenshū.
-      </span> */}
+          <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
+            AI-powered NLP tools tailored for African languages, making technology accessible to everyone.
+          </p>
 
-      <div className="mt-10 mb-8">
-        <CopyText value="bunx degit localeNLP/localenlp localenlp" />
-      </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button size="lg">
+              Explore Our Models
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+            <Button size="lg" variant="outline">
+              Learn More
+              <Globe className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
 
-      <TooltipProvider delayDuration={0}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <a
-              href="https://news.ycombinator.com/item?id=41408929"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div className="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={16}
-                  height={16}
-                  fill="none"
-                >
-                  <g clipPath="url(#a)">
-                    <path
-                      fill="#F60"
-                      d="M0 0localenlp6h16V0H0Zm8.7 9.225v3.925H7.275V9.225L3.775 2.3h1.65L8 7.525 10.65 2.3h1.55L8.7 9.225Z"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="a">
-                      <path fill="#fff" d="M0 0h16localenlp6H0z" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                <span className="text-sm">Live on Hacker News</span>
-              </div>
-            </a>
-          </TooltipTrigger>
-          <TooltipContent side="bottom" sideOffset={15} className="text-xs">
-            Show HN: localenlp – An open-source starter kit for your next project
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      {/* Features section */}
+      <section className="container py-24 space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Key Features
+          </h2>
+          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            Discover our comprehensive suite of NLP tools designed specifically for African languages
+          </p>
+        </div>
+        <div className="mx-auto grid gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-2 lg:grid-cols-4">
+          {features.map((feature) => (
+            <Card key={feature.title} className="relative overflow-hidden">
+              <CardHeader>
+                <div className="mb-2 inline-block rounded-lg bg-primary/10 p-3">
+                  <feature.icon className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle className="text-xl">{feature.title}</CardTitle>
+                <CardDescription>{feature.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 opacity-10">
+                  <feature.icon className="h-24 w-24" />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
 
-      <div className="absolute -bottom-[280px] inset-0 bg-[linear-gradient(to_right,#222_1px,transparent_1px),linear-gradient(to_bottom,#222_1px,transparent_1px)] bg-[size:4.5rem_2rem] -z-10 [transform:perspective(560px)_rotateX(63deg)] pointer-events-none" />
-      <div className="absolute w-full bottom-[100px] h-1/2  bg-gradient-to-b from-background to-transparent pointer-events-none -z-10" />
+      {/* Demo section */}
+      <section className="container py-24 space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Try It Yourself
+          </h2>
+          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            Experience our translation technology in action. Translate between English and various African languages.
+          </p>
+        </div>
+        <DemoTranslator />
+      </section>
+
+      {/* Technology section */}
+      <section className="container py-24 space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Our Technology
+          </h2>
+          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            Discover how we build and deploy state-of-the-art AI models for African languages
+          </p>
+        </div>
+        <TechnologyShowcase />
+      </section>
+
+      {/* Partners section */}
+      <section className="container py-24 space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Our Partners
+          </h2>
+          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            Collaborating with leading institutions to advance African language technology
+          </p>
+        </div>
+        <PartnersShowcase />
+      </section>
+
+      {/* Timeline section */}
+      <section className="container py-24 space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Our Journey
+          </h2>
+          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            Milestones in our mission to revolutionize African language technology
+          </p>
+        </div>
+        <TimelineShowcase />
+      </section>
+
+      {/* Leaderboard section */}
+      <section className="container py-24 space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Top Contributors
+          </h2>
+          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            Meet our community champions helping to preserve and digitize African languages
+          </p>
+        </div>
+        <LeaderboardShowcase />
+      </section>
+
+      {/* About section */}
+      <section className="container py-24 space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            About Us
+          </h2>
+          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            Building the future of African language technology
+          </p>
+        </div>
+        <AboutShowcase />
+      </section>
+
+      {/* Contact section */}
+      <section className="container py-24 space-y-8">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Get in Touch
+          </h2>
+          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          </p>
+        </div>
+        <ContactShowcase />
+      </section>
     </div>
-  );
+  )
 }

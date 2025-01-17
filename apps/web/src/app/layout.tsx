@@ -1,44 +1,30 @@
-import "@localenlp/ui/globals.css";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
-import { Provider as AnalyticsProvider } from "@localenlp/analytics/client";
-import { cn } from "@localenlp/ui/cn";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google"
+import { cn } from "@/lib/utils"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
-const DepartureMono = localFont({
-  src: "../fonts/DepartureMono-Regular.woff2",
-  variable: "--font-departure-mono",
-});
+const inter = Inter({ subsets: ["latin"] })
 
-export const metadata: Metadata = {
-metadataBase: new URL("https://localenlp.com"),
-title: "LocaleNLP",
-description:
-  "LocaleNLP is revolutionizing digital communication in Africa with cutting-edge NLP solutions tailored for underserved languages. Explore our tools for text translation, speech recognition, and AI-powered linguistic solutions, driving inclusivity and empowering communities.",
-};
+export const metadata = {
+  title: "LocaleNLP - Breaking Language Barriers in Africa",
+  description: "AI-powered NLP tools tailored for African languages",
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          `${DepartureMono.variable} ${GeistSans.variable} ${GeistMono.variable}`,
-          "antialiased dark",
-        )}
-      >
-        <Header />
-        {children}
-        <Footer />
-
-        <AnalyticsProvider />
+      <body className={cn(inter.className, "min-h-screen bg-background")}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

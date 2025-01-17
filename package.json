@@ -1,7 +1,11 @@
 {
   "name": "localenlp",
   "private": true,
-  "workspaces": ["packages/*", "apps/*", "tooling/*"],
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "tooling/*"
+  ],
   "scripts": {
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
@@ -25,5 +29,10 @@
     "turbo": "2.1.1",
     "typescript": "^5.5.4"
   },
-  "packageManager": "bun@1.1.26"
+  "packageManager": "bun@1.1.26",
+  "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.2",
+    "@radix-ui/react-select": "^2.1.4",
+    "framer-motion": "^11.18.0"
+  }
 }
