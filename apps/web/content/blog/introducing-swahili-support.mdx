@@ -1,0 +1,47 @@
+---
+title: "Introducing Support for Swahili"
+description: "We're excited to announce full support for Swahili in our translation models"
+date: "2024-03-15"
+category: "Updates"
+author:
+  name: "Sarah Okafor"
+  avatar: "/team/sarah.webp"
+readingTime: "5 min read"
+---
+
+We're thrilled to announce that LocaleNLP now fully supports Swahili (Kiswahili), one of Africa's most widely spoken languages. This marks a significant milestone in our mission to break down language barriers across the continent.
+
+## Why Swahili?
+
+Swahili serves as a lingua franca for over 100 million people across East Africa, including:
+
+- Tanzania
+- Kenya
+- Uganda
+- Rwanda
+- Burundi
+- Democratic Republic of the Congo
+
+```typescript
+// Example usage of our Swahili translation API
+const translation = await localenlp.translate({
+  text: "Hello, how are you?",
+  from: "en",
+  to: "sw"
+});
+
+console.log(translation.text); // "Habari, u hali gani?"
+```
+
+## Technical Improvements
+
+Our new Swahili model achieves:
+
+- 95% accuracy on common phrases
+- Support for multiple dialects
+- Real-time translation capabilities
+- Contextual understanding
+
+## What's Next?
+
+This is just the beginning of our expansion into East African languages. Stay tuned for more updates as we continue to improve and expand our language support.

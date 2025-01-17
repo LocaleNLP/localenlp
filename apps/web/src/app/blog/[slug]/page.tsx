@@ -4,24 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Twitter, Linkedin } from "lucide-react"
 import Link from "next/link"
-import type { BlogPost } from "@/lib/types"
-
-// This would typically come from a CMS or API
-const posts: BlogPost[] = [
-  {
-    slug: "introducing-swahili-support",
-    title: "Introducing Support for Swahili",
-    description: "We're excited to announce full support for Swahili in our translation models",
-    category: "Updates",
-    date: "2024-03-15",
-    author: {
-      name: "Sarah Okafor",
-      avatar: "/team/sarah.webp",
-    },
-    readingTime: "5 min read",
-  },
-  // ... other posts
-]
+import { getPostBySlug, getAllPosts } from "@/lib/mdx"
 
 interface BlogPostPageProps {
   params: {
@@ -29,8 +12,15 @@ interface BlogPostPageProps {
   }
 }
 
-export function generateMetadata({ params }: BlogPostPageProps) {
-  const post = posts.find((post) => post.slug === params.slug)
+export async function generateStaticParams() {
+  const posts = await getAllPosts()
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
+}
+
+export async function generateMetadata({ params }: BlogPostPageProps) {
+  const post = await getPostBySlug(params.slug)
 
   if (!post) {
     return {
@@ -39,23 +29,23 @@ export function generateMetadata({ params }: BlogPostPageProps) {
   }
 
   return {
-    title: `${post.title} - LocaleNLP Blog`,
-    description: post.description,
+    title: `${post.meta.title} - LocaleNLP Blog`,
+    description: post.meta.description,
   }
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = posts.find((post) => post.slug === params.slug)
+const categoryColors = {
+  Technical: "bg-blue-500/10 text-blue-500",
+  Research: "bg-purple-500/10 text-purple-500",
+  Community: "bg-green-500/10 text-green-500",
+  Updates: "bg-orange-500/10 text-orange-500",
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = await getPostBySlug(params.slug)
 
   if (!post) {
     notFound()
-  }
-
-  const categoryColors = {
-    Technical: "bg-blue-500/10 text-blue-500",
-    Research: "bg-purple-500/10 text-purple-500",
-    Community: "bg-green-500/10 text-green-500",
-    Updates: "bg-orange-500/10 text-orange-500",
   }
 
   return (
@@ -70,37 +60,37 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           </Link>
           <Badge
             variant="secondary"
-            className={categoryColors[post.category]}
+            className={categoryColors[post.meta.category]}
           >
-            {post.category}
+            {post.meta.category}
           </Badge>
-          <h1 className="text-4xl font-bold">{post.title}</h1>
+          <h1 className="text-4xl font-bold">{post.meta.title}</h1>
           <p className="text-xl text-muted-foreground">
-            {post.description}
+            {post.meta.description}
           </p>
         </div>
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Avatar>
-              <AvatarImage src={post.author.avatar} alt={post.author.name} />
+              <AvatarImage src={post.meta.author.avatar} alt={post.meta.author.name} />
               <AvatarFallback>
-                {post.author.name
+                {post.meta.author.name
                   .split(" ")
                   .map((n) => n[0])
                   .join("")}
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-medium">{post.author.name}</p>
+              <p className="font-medium">{post.meta.author.name}</p>
               <p className="text-sm text-muted-foreground">
-                {new Date(post.date).toLocaleDateString("en-US", {
+                {new Date(post.meta.date).toLocaleDateString("en-US", {
                   month: "long",
                   day: "numeric",
                   year: "numeric",
                 })}
                 {" · "}
-                {post.readingTime}
+                {post.meta.readingTime}
               </p>
             </div>
           </div>
@@ -116,12 +106,8 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </div>
 
-      {/* Blog content would go here - typically from a CMS */}
       <div className="prose prose-gray dark:prose-invert max-w-none">
-        <p>
-          This is where the blog post content would go. In a real application,
-          this would typically be fetched from a CMS or markdown files.
-        </p>
+        {post.content}
       </div>
     </article>
   )
