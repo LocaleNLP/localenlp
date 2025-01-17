@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/site-header"
 import { cn } from "@/lib/utils"
 import { Inter } from "next/font/google"
 import "@/styles/globals.css"
+import { SiteFooter } from "@/components/site-footer"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
             <main className="flex-1">{children}</main>
+            <SiteFooter />
           </div>
         </ThemeProvider>
       </body>
