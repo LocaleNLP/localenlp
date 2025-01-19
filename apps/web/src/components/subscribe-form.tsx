@@ -1,78 +1,87 @@
 "use client";
 
-import { subscribeAction } from "@/actions/subscribe-action";
-import { Button } from "@localenlp/ui/button";
-import { Icons } from "@localenlp/ui/icons";
-import { Input } from "@localenlp/ui/input";
 import { useState } from "react";
-import { useFormStatus } from "react-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Icons } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/use-toast";
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
+const subscribeSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+});
 
-  return (
-    <Button type="submit" className="ml-auto rounded-full">
-      {pending ? <Icons.Loader className="size-4" /> : "Subscribe"}
-    </Button>
-  );
+type SubscribeFormData = z.infer<typeof subscribeSchema>;
+
+interface SubscribeFormProps {
+  group: string;
+  placeholder?: string;
+  className?: string;
 }
 
-type Props = {
-  group: string;
-  placeholder: string;
-  className?: string;
-};
+export function SubscribeForm({ group, placeholder = "Enter your email", className }: SubscribeFormProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  const form = useForm<SubscribeFormData>({
+    resolver: zodResolver(subscribeSchema),
+  });
 
-export function SubscribeForm({ group, placeholder, className }: Props) {
-  const [isSubmitted, setSubmitted] = useState(false);
+  async function onSubmit(data: SubscribeFormData) {
+    try {
+      setIsSubmitting(true);
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: data.email, group }),
+      });
+
+      if (!response.ok) throw new Error("Subscription failed");
+
+      toast({
+        title: "Success!",
+        description: "Thank you for subscribing to our newsletter.",
+      });
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <div>
-      <div>
-        {isSubmitted ? (
-          <div className="border border-[#2C2C2C] text-sm text-primary h-9 w-[290px] flex items-center py-0.5 px-2 justify-between">
-            <p>Subscribed</p>
-
-            <svg
-              width="17"
-              height="17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Check</title>
-              <path
-                d="m14.546 4.724-8 8-3.667-3.667.94-.94 2.727 2.72 7.06-7.053.94.94Z"
-                fill="currentColor"
-              />
-            </svg>
-          </div>
-        ) : (
-          <form
-            className="flex flex-col gap-4"
-            action={async (formData) => {
-              setSubmitted(true);
-              await subscribeAction(formData, group);
-
-              setTimeout(() => {
-                setSubmitted(false);
-              }, 5000);
-            }}
-          >
-            <Input
-              placeholder={placeholder}
-              type="email"
-              name="email"
-              id="email"
-              autoComplete="email"
-              aria-label="Email address"
-              required
-              className={className}
-            />
-
-            <SubmitButton />
-          </form>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <div className="relative">
+        <Input
+          {...form.register("email")}
+          placeholder={placeholder}
+          type="email"
+          autoComplete="email"
+          className={className}
+          disabled={isSubmitting}
+        />
+        {form.formState.errors.email && (
+          <p className="mt-1 text-sm text-destructive">
+            {form.formState.errors.email.message}
+          </p>
         )}
       </div>
-    </div>
+      <Button type="submit" disabled={isSubmitting} className="w-full">
+        {isSubmitting ? (
+          <>
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            Subscribing...
+          </>
+        ) : (
+          "Subscribe"
+        )}
+      </Button>
+    </form>
   );
 }
