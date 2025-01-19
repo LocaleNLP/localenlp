@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { useScroll } from "@/hooks/use-scroll"
 import { cn } from "@/lib/utils"
-import { Search } from "@/components/search"
 
 export function SiteHeader() {
   const scrolled = useScroll(50)
@@ -15,26 +14,26 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full",
-        scrolled && "border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        scrolled && "border-b"
       )}
     >
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="lg:hidden">
-            <span className="font-bold">LocaleNLP</span>
+      <div className="container flex h-16 items-center">
+        <div className="flex flex-1 items-center gap-6">
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="font-bold inline-block">LocaleNLP</span>
           </Link>
           <MobileNav />
           <MainNav />
         </div>
         <div className="flex items-center gap-2">
-          <Search />
           <ThemeToggle />
-          <div className="lg:hidden">
-            <Button size="sm">
-              Get Started
-            </Button>
-          </div>
+          <Button asChild variant="outline" size="sm" className="hidden lg:flex">
+            <Link href="/login">Sign In</Link>
+          </Button>
+          <Button asChild size="sm" className="hidden lg:flex">
+            <Link href="/register">Get Started</Link>
+          </Button>
         </div>
       </div>
     </header>
