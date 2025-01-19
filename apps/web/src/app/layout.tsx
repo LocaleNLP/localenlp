@@ -6,7 +6,10 @@ import "@/styles/globals.css"
 import { SiteFooter } from "@/components/site-footer"
 import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 export const metadata = {
   title: {
@@ -18,9 +21,8 @@ export const metadata = {
   keywords: [
     "African languages",
     "NLP",
-    "machine translation",
-    "language technology",
     "AI",
+    "Translation",
   ],
   authors: [
     {
@@ -63,7 +65,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          inter.className
+          inter.variable
         )}
       >
         <ThemeProvider
