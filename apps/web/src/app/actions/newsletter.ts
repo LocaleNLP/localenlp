@@ -1,34 +1,54 @@
 "use server"
 
 import { z } from "zod"
+import { revalidatePath } from "next/cache"
 
 const newsletterSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Please enter a valid email address"),
 })
 
-type NewsletterInput = z.infer<typeof newsletterSchema>
+export type SubscribeFormData = z.infer<typeof newsletterSchema>
 
-export async function subscribeToNewsletter(data: NewsletterInput) {
+export type SubscribeResponse = {
+  success: boolean
+  message: string
+}
+
+export async function subscribeToNewsletter(
+  data: SubscribeFormData
+): Promise<SubscribeResponse> {
   try {
     const validatedData = newsletterSchema.parse(data)
 
-    // Here you would typically:
-    // 1. Add the email to your newsletter service (e.g., Mailchimp)
-    // 2. Store the subscription in your database
-    // 3. Send a confirmation email
-
-    // For now, we'll just simulate a delay
+    // Add artificial delay to simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    return { success: true }
+    // Here you would typically:
+    // 1. Check if email already exists
+    // 2. Add to your newsletter service (e.g., Mailchimp, SendGrid)
+    // 3. Store in your database
+    // 4. Send confirmation email
+
+    revalidatePath("/")
+
+    return {
+      success: true,
+      message: "Thanks for subscribing! Please check your email to confirm.",
+    }
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors[0].message }
+      return {
+        success: false,
+        message: error.errors[0].message,
+      }
     }
 
     return {
       success: false,
-      error: "Something went wrong. Please try again later."
+      message: "Something went wrong. Please try again later.",
     }
   }
 }

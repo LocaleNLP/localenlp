@@ -11,14 +11,17 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandLoading,
   CommandSeparator,
 } from "@/components/ui/command"
 import { Search as SearchIcon } from "lucide-react"
+import { useSearch } from "@/hooks/use-search"
 
 export function Search() {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const { setTheme } = useTheme()
+  const { search, results, isLoading } = useSearch()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -51,32 +54,47 @@ export function Search() {
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput
+          placeholder="Type to search..."
+          onValueChange={(value) => search(value)}
+        />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Links">
-            <CommandItem
-              onSelect={() => {
-                runCommand(() => router.push("/docs"))
-              }}
-            >
-              Documentation
-            </CommandItem>
-            <CommandItem
-              onSelect={() => {
-                runCommand(() => router.push("/guides"))
-              }}
-            >
-              Guides
-            </CommandItem>
-            <CommandItem
-              onSelect={() => {
-                runCommand(() => router.push("/blog"))
-              }}
-            >
-              Blog
-            </CommandItem>
-          </CommandGroup>
+          {isLoading && <CommandLoading>Searching...</CommandLoading>}
+          {results.docs.length > 0 && (
+            <CommandGroup heading="Documentation">
+              {results.docs.map((item) => (
+                <CommandItem
+                  key={item.href}
+                  onSelect={() => runCommand(() => router.push(item.href))}
+                >
+                  <div className="flex flex-col">
+                    <span>{item.title}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {item.description}
+                    </span>
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
+          {results.posts.length > 0 && (
+            <CommandGroup heading="Blog Posts">
+              {results.posts.map((item) => (
+                <CommandItem
+                  key={item.href}
+                  onSelect={() => runCommand(() => router.push(item.href))}
+                >
+                  <div className="flex flex-col">
+                    <span>{item.title}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {item.description}
+                    </span>
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
           <CommandSeparator />
           <CommandGroup heading="Theme">
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
