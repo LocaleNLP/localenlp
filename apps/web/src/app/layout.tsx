@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader } from "@/components/site-header"
 import { cn } from "@/lib/utils"
-import { Inter } from "next/font/google"
+import { Inter, Manrope } from "next/font/google"
 import "@/styles/globals.css"
 import { SiteFooter } from "@/components/site-footer"
 import { Toaster } from "@/components/ui/toaster"
@@ -9,6 +9,11 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+})
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-heading",
 })
 
 export const metadata = {
@@ -65,12 +70,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          inter.variable
+          inter.variable,
+          manrope.variable
         )}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
