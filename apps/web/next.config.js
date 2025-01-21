@@ -3,6 +3,9 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
+  images: {
+    domains: ['localhost'], // Add any external image domains here
+  },
   // ... other config options
 }
 

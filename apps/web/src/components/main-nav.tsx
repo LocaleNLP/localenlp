@@ -17,7 +17,7 @@ export function MainNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="hidden lg:flex lg:gap-6">
+    <nav className="flex items-center gap-6">
       {navigation.map((item) => (
         <Link
           key={item.name}
@@ -26,7 +26,7 @@ export function MainNav() {
             "text-sm font-medium transition-colors hover:text-primary",
             pathname === item.href
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-muted-foreground"
           )}
         >
           {item.name}
