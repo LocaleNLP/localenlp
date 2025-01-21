@@ -44,7 +44,8 @@ const contactInfo = [
 ]
 
 export function ContactShowcase() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isPending, startTransition] = useState(false)
+
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -55,24 +56,22 @@ export function ContactShowcase() {
     },
   })
 
-  async function onSubmit(data: ContactFormValues) {
-    setIsSubmitting(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    console.log(data)
-    setIsSubmitting(false)
-    form.reset()
+  function onSubmit(data: ContactFormValues) {
+    startTransition(async () => {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      console.log(data)
+      form.reset()
+    })
   }
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
-      {/* Contact Form */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="space-y-8"
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -96,7 +95,7 @@ export function ContactShowcase() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="your@email.com" {...field} />
+                    <Input type="email" placeholder="Your email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,10 +107,7 @@ export function ContactShowcase() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Subject</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a subject" />
@@ -120,7 +116,7 @@ export function ContactShowcase() {
                     <SelectContent>
                       <SelectItem value="general">General Inquiry</SelectItem>
                       <SelectItem value="partnership">Partnership</SelectItem>
-                      <SelectItem value="support">Technical Support</SelectItem>
+                      <SelectItem value="support">Support</SelectItem>
                       <SelectItem value="careers">Careers</SelectItem>
                     </SelectContent>
                   </Select>
@@ -136,7 +132,7 @@ export function ContactShowcase() {
                   <FormLabel>Message</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Your message..."
+                      placeholder="Your message"
                       className="min-h-[120px]"
                       {...field}
                     />
@@ -145,8 +141,8 @@ export function ContactShowcase() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? (
+            <Button type="submit" disabled={isPending} className="w-full">
+              {isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Sending...
@@ -159,7 +155,6 @@ export function ContactShowcase() {
         </Form>
       </motion.div>
 
-      {/* Contact Info & Map */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
