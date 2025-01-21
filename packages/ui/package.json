@@ -7,8 +7,9 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "lint": "biome check .",
-    "format": "biome --write .",
-    "typecheck": "tsc --noEmit"
+    "format": "biome format --write src/",
+    "typecheck": "tsc --noEmit",
+    "lint:fix": "biome check --apply src/"
   },
   "devDependencies": {
     "@localenlp/typescript": "workspace:*",
