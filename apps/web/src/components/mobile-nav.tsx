@@ -25,17 +25,17 @@ const navigation = [
 
 export function MobileNav() {
   const pathname = usePathname()
-  const [open, setOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
           className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
+          aria-label="Toggle menu"
         >
           <Menu className="h-6 w-6" />
-          <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="pl-1 pr-0">
@@ -44,18 +44,18 @@ export function MobileNav() {
             <Link
               href="/"
               className="flex items-center"
-              onClick={() => setOpen(false)}
+              onClick={() => setIsOpen(false)}
             >
               <span className="font-bold">LocaleNLP</span>
             </Link>
           </SheetTitle>
         </SheetHeader>
-        <div className="flex flex-col space-y-3 px-6 pt-6">
+        <nav className="flex flex-col space-y-3 px-6 pt-6">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              onClick={() => setOpen(false)}
+              onClick={() => setIsOpen(false)}
               className={cn(
                 "text-sm font-medium transition-colors hover:text-primary",
                 pathname === item.href
@@ -66,13 +66,15 @@ export function MobileNav() {
               {item.name}
             </Link>
           ))}
-          <div className="space-y-2">
-            <Button variant="outline" className="w-full">
+          <div className="space-y-2 pt-4">
+            <Button variant="outline" className="w-full justify-center">
               Sign In
             </Button>
-            <Button className="w-full">Get Started</Button>
+            <Button className="w-full justify-center">
+              Get Started
+            </Button>
           </div>
-        </div>
+        </nav>
       </SheetContent>
     </Sheet>
   )
