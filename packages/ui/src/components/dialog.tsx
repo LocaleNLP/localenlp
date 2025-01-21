@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import * as React from "react";
 
 // Export the Dialog components
 export const Dialog = DialogPrimitive.Root;
