@@ -82,7 +82,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 w-full">
+              <div className="container mx-auto">
+                {children}
+              </div>
+            </main>
             <SiteFooter />
           </div>
           <Toaster />
